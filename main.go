@@ -2,20 +2,18 @@ package main
 
 import (
 	"fmt"
-	"reflect"
 )
 
 func main(){
 
-	fmt.Println("Hi, there!")
-
-	var a = "hello world :)"
-
-	fmt.Println(reflect.TypeOf(a))
-
-	b := 90
-
-	b = 88
+	fmt.Println("Hi, welcome to the Experience!\nPlease enter your first name:")
+	var fname string
+	fmt.Scan(&fname)
+	fmt.Printf("Configuring profile for %s...\n", fname)
+	beyondmain()
 	
-	fmt.Println(b)
+}
+
+func beyondmain(){
+	fmt.Println("Creating worlds...")
 }
