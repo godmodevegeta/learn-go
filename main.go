@@ -1,11 +1,11 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"log"
 	"os"
-	"errors"
 )
 type person struct {
 	name string
@@ -16,6 +16,8 @@ type person struct {
 func main() {
 
 	fmt.Println("====DEFER====")
+	fmt.Println("os.Args:", os.Args)
+  fmt.Println(len(os.Args), os.Args[0])
 	if len(os.Args) < 2 {
 		log.Fatal("no file specified")
 	}
@@ -96,4 +98,44 @@ func modifyFails(i int, s string, p person) {
 	s = "Goodbye"
 	p.name = "Bob"
 }
+
+// func doSomeInserts(ctx context.Context, db *sql.DB, value1, value2 string) (err error) {
+//	tx, err := db.BeginTx(ctx, nil)
+//	if err != nil {
+//		return err
+//	}
+//	defer func() {
+//		if err == nil {
+//			err = tx.Commit()
+//		}
+//		if err != nil {
+//			tx.Rollback()
+//		}
+//	}()
+
+//	_, err = tx.ExecContext(ctx, "INSERT INTO FOO (val) $1", value1)
+//	if err != nil {
+//		return err
+//	}
+//	// use tx to do more db inserts here
+//	return nil
+//}
+
+func getFile(name string) (*os.File, func(), error) {
+	file, err := os.Open(name)
+	if err != nil {
+		return nil, nil, err
+	}
+	return file, func() {
+		file.Close()
+	}, nil
+}
+
+//func prefixer(input string) func(input string) string {
+//	return input + func() {} ()	
+//}
+
+
+
+
 

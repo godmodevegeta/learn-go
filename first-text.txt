@@ -1,0 +1,3 @@
+line 1: First man to the moon was an American.
+line 2: Second man to the moon was Edwin Aldrin.
+line 3: The first statement on the moon was "One small step am man , one giant step for mankind"
