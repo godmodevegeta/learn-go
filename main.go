@@ -60,10 +60,90 @@ func main () {
   o := Outer{}
 	o.CallHello()
 
-	fmt.Println("====== A Quick Lesson on Interfaces ======")
+	fmt.Println("====== Interfaces are Type-Safe Duck Typing ======")
 	
+	
+
+	fmt.Println("_____ Chapter 7: Ex 1 ______")
+
+	teamA := Team{
+		TeamName:   "Lakers",
+		PlayerNames: []string{"LeBron", "AD", "Reaves"},
+	}
+
+	teamB := Team{
+		TeamName:   "Bulls",
+		PlayerNames: []string{"LaVine", "DeRozan", "Vucevic"},
+	}
+
+	teamC := Team{
+		TeamName:   "Warriors",
+		PlayerNames: []string{"Curry", "Klay", "Draymond"},
+	}
+
+// Create league
+	league := League{
+		Teams: []Team{teamA, teamB, teamC},
+		Wins:  make(map[string]int),
+	}
+
+	// Simulate matches
+	league.MatchResult("Lakers", 102, "Bulls", 98)
+	league.MatchResult("Warriors", 120, "Lakers", 115)
+	league.MatchResult("Bulls", 110, "Warriors", 105)
+	league.MatchResult("Lakers", 130, "Warriors", 136)
+	league.MatchResult("Lakers", 130, "Bulls", 136) 
+	league.MatchResult("Bulls", 130, "Warriors", 136)
+
+	fmt.Println("League Final Championship")
+	for _,team := range league.Teams {
+		fmt.Println("Team", team.TeamName, ":", league.Wins[team.TeamName], "wins")
+	}
+	ranking := league.Ranking()
+	for i, team := range ranking{
+		switch i{ 
+			case 0:
+				fmt.Println("Winner:", team)
+			case 1:
+				fmt.Println("Runner Up:", team)
+			default:
+				fmt.Println("Numeber", i, ":", team)
+			}
+	}
+
 }
 
+type Team struct {
+	TeamName string
+	PlayerNames []string
+}
+
+type League struct {
+	Teams []Team
+	Wins map[string]int
+}
+
+func (l *League)MatchResult(team1 string, score1 int, team2 string, score2 int) {
+	if score1 > score2 {
+		l.Wins[team1] += 1
+	} else if score2 > score1 {
+		l.Wins[team2] += 1
+	}
+}
+
+func (l *League)Ranking() []string {
+	var response []string
+
+	return response
+}
+
+type Incrementer interface {
+	Increment()
+}
+
+type Stringer interface {
+	String() string
+}
 type Inner struct {}
 func (i Inner) SayHello() {
 	fmt.Println("Hello from Inner")
